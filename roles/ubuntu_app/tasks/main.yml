@@ -1,0 +1,12 @@
+---
+- name: Install NGINX web server on Ubuntu
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: true
+
+- name: Start and enable NGINX
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true

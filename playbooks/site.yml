@@ -1,0 +1,40 @@
+---
+- name: Configure Rocky Linux web server
+  hosts: rocky
+  become: true
+
+  roles:
+    - rocky_web
+
+  tasks:
+    - name: Check Apache HTTP response
+      ansible.builtin.uri:
+        url: http://127.0.0.1
+        method: GET
+        status_code: 200
+      register: apache_health
+      changed_when: false
+
+    - name: Display Apache health status
+      ansible.builtin.debug:
+        msg: "Rocky Apache is healthy - HTTP {{ apache_health.status }}"
+
+- name: Configure Ubuntu web server
+  hosts: ubuntu
+  become: true
+
+  roles:
+    - ubuntu_app
+
+  tasks:
+    - name: Check NGINX HTTP response
+      ansible.builtin.uri:
+        url: http://127.0.0.1
+        method: GET
+        status_code: 200
+      register: nginx_health
+      changed_when: false
+
+    - name: Display NGINX health status
+      ansible.builtin.debug:
+        msg: "Ubuntu NGINX is healthy - HTTP {{ nginx_health.status }}"

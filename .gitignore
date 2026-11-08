@@ -1,0 +1,8 @@
+# Certificates and trust bundles
+certificates/
+
+# Encrypted credentials
+inventory/group_vars/windows/vault.yml
+
+# Ansible temporary files
+*.retry

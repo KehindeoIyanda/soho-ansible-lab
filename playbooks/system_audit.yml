@@ -1,0 +1,28 @@
+---
+- name: SOHO Linux Infrastructure Audit
+  hosts: linux
+  become: false
+  gather_facts: true
+
+  tasks:
+    - name: Display operating system information
+      ansible.builtin.debug:
+        msg:
+          - "Hostname: {{ inventory_hostname }}"
+          - "Operating System: {{ ansible_distribution }}"
+          - "Version: {{ ansible_distribution_version }}"
+
+    - name: Display memory information
+      ansible.builtin.debug:
+        msg:
+          - "Total RAM: {{ ansible_memtotal_mb }} MB"
+          - "Free RAM: {{ ansible_memfree_mb }} MB"
+
+    - name: Check root filesystem disk usage
+      ansible.builtin.command: df -h /
+      register: root_disk_usage
+      changed_when: false
+
+    - name: Display disk usage
+      ansible.builtin.debug:
+        var: root_disk_usage.stdout_lines

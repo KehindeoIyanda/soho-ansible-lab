@@ -1,0 +1,13 @@
+---
+- name: Create shared folder
+  ansible.windows.win_file:
+    path: C:\SOHO\Shared
+    state: directory
+
+- name: Create SOHO network share
+  ansible.windows.win_share:
+    name: SOHO-Shared
+    description: SOHO Infrastructure Shared Folder
+    path: C:\SOHO\Shared
+    list: true
+    full: Administrators

@@ -1,0 +1,30 @@
+---
+- name: Install Apache web server on Rocky Linux
+  ansible.builtin.dnf:
+    name: httpd
+    state: present
+
+- name: Create Apache homepage
+  ansible.builtin.copy:
+    dest: /var/www/html/index.html
+    content: |
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>SOHO Infrastructure</title>
+      </head>
+      <body>
+          <h1>Welcome to the SOHO Infrastructure Lab</h1>
+          <p>Rocky Linux Apache Web Server</p>
+          <p>Managed automatically with Ansible.</p>
+      </body>
+      </html>
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start and enable Apache
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: true
